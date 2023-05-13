@@ -1,12 +1,12 @@
 
 import './App.css';
-import React,{useEffect, useState} from 'react';
-import axios from 'axios';
-import {BrowserRouter,Routes,Route,Navigate} from 'react-router-dom'
+import React from 'react';
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Dashboard from './components/Dashboard';
 import Index from './components/Index';
 import Form from './components/Form';
 import OneProduct from './components/OneProduct';
+import Update from './components/Update';
 
 
 
@@ -22,6 +22,7 @@ function App() {
         <Route path="/products" element={<Dashboard/>}/>
         <Route path="/products/new" element={<Form/>}/>
         <Route path="/products/:id" element={<OneProduct/>}/>
+        <Route path="/products/:id/edit" element={<Update/>}/>
 
 
       </Routes>
