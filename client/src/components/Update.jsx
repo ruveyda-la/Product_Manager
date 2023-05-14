@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const Update= () => {
     const navigate = useNavigate()
+    const [errors,setErrors] = useState([])
     
     const [ product, setProduct ] = useState({
         title:"",
@@ -15,11 +16,16 @@ const Update= () => {
         e.preventDefault(); 
         axios.patch(`http://localhost:8000/api/products/${id}`,product)
             .then(res=>{console.log(res);
-                        console.log(res.data);
                         navigate("/products")
                         })
             .catch((err) => {
                 console.log(err);
+                const errors = err.response.data.error.errors;
+                const errList=[];
+                for(const key of Object.keys(errors)){
+                    errList.push(errors[key].message)
+                };
+                setErrors(errList);
             })
         };
         
@@ -40,6 +46,9 @@ const Update= () => {
     },[id])
     return (
         <div className='container' style={{width:"600px", marginTop:"100px"}}>
+            {errors && errors.map((item,idx)=>(
+                <p key={idx} onClose={()=> setErrors([])} style={{color:"red"}}>{item}</p>
+            ))}
             <form onSubmit={submitHandler} >
                 <label htmlFor="title">Title:</label>
                 <input type="text" name="title" value={product.title} onChange={changeHandler}  className="form-control" style={{margin:"10px"}}/>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 const Index= () => {
     const [ message, setMessage ] = useState("")
     useEffect(()=>{
@@ -8,8 +9,9 @@ const Index= () => {
             .catch(err=>console.log(err))
     }, []);
     return (
-        <div>
+        <div style={{width:"600px",margin:"0 auto", marginTop:"100px"}}>
             <h2>{message}</h2>
+            <Link to="/products">Go to Dashboard</Link>
         </div>
     )
 }

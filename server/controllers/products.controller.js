@@ -27,7 +27,7 @@ module.exports = {
     updateProduct : (req,res) => {
         Product.findOneAndUpdate({_id:req.params._id},req.body,{new:true, runValidators:true})
             .then(updatedProduct => {res.json(updatedProduct)})
-            .catch((err) => {res.json({message:'Something went wrong',error:err})});
+            .catch((err) => {res.status(400).json({message:'Something went wrong',error:err})});
             },
     deleteProduct : (req,res) => {
         Product.deleteOne({_id:req.params._id})
