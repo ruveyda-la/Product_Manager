@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams,Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -46,6 +46,10 @@ const Update= () => {
     },[id])
     return (
         <div className='container' style={{width:"600px", marginTop:"100px"}}>
+            <div style={{display:"flex",justifyContent:"space-between",margin:"10px"}}>
+            <h5>Update Product</h5>
+            <p><Link to="/products">Dashboard</Link></p>
+            </div>
             {errors && errors.map((item,idx)=>(
                 <p key={idx} onClose={()=> setErrors([])} style={{color:"red"}}>{item}</p>
             ))}

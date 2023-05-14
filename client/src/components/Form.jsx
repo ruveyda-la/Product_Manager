@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -38,6 +38,10 @@ const Form= () => {
     };
     return (
         <div className='container' style={{width:"600px", marginTop:"100px"}}>
+            <div style={{display:"flex",justifyContent:"space-between",margin:"10px"}}>
+            <h5>Add a New Product</h5>
+            <p><Link to="/products">Dashboard</Link></p>
+            </div>
             {errors && errors.map((item,idx)=>(
                 <p key={idx} onClose={()=> setErrors([])} style={{color:"red"}}>{item}</p>
             ))}

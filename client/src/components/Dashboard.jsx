@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   return (
     <div className='container' style={{width:"1000px", marginTop:"100px"}}>
-        <h2>Products</h2>
+        <h4>Products</h4>
         <table className="table table-striped">
             <thead>
                 <tr>
