@@ -1,32 +1,36 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react'
-import { useNavigate,Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import {useEffect} from 'react'
+import DeleteButton from './DeleteButton';
 
-const Dashboard = () => {
-    const [state,setState]=useState([]);
-    const navigate = useNavigate()
-    
+const Dashboard = (props) => {
+    const {products,setProducts,setIsEdit, setProduct}=props;
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/products")
              .then((res)=>{
-                setState(res.data)
-                navigate("/products")
-
+              setProducts(res.data)
+  
              })
              .catch((err)=>{
                 console.log(err)
              })
-    },[navigate])
+    })
 
-    const deleteHandler = (id) => {
-        const newList = state.filter((item,idx) => (item._id !== id));
-        setState(newList)
-        axios.delete(`http://localhost:8000/api/products/${id}`)
-        .then((res)=> {
-          console.log(res.data)
-        })
-        .catch((err) => console.log(err))
+
+    
+
+    const editHandler = (object) => {
+        setProduct(object);
+        setIsEdit(true);
+    }
+
+    const createHandler = () => {
+        setIsEdit(false);
+        setProduct({title:"",
+                    price:"",
+                    description:""});
+
     }
 
   return (
@@ -43,15 +47,15 @@ const Dashboard = () => {
             </thead>
             <tbody>
                 {
-                    state.map((item,idx) => (
+                    products.map((item,idx) => (
                         <tr key={idx}>
                             <td>{item.title}</td>
                             <td>${item.price}</td>
                             <td>{item.description}</td>
                             <td>
-                                <Link to={`/products/${item._id}`}> View</Link> |
-                                <Link to={`/products/${item._id}/edit`}>Edit</Link> |
-                                <Link to={`/products`} onClick={() => deleteHandler(item._id)} style={{color:"red"}}>Delete</Link>
+                                <Link className='btn btn-primary' to={`/products/${item._id}`}> View</Link> 
+                                <Link className='btn btn-primary' to={`/products/edit`} onClick={() => editHandler(item)}>Edit</Link> 
+                                <DeleteButton products={products} id={item._id} setProducts={setProducts}/>
                             </td>
                         </tr>
                     ))
@@ -60,7 +64,7 @@ const Dashboard = () => {
                 }    
             </tbody>
         </table>
-        <Link to="/products/new" >Add New Product</Link>
+        <Link to="/products/create" onClick={()=>createHandler()}>Add New Product</Link>
 
 
 
